@@ -1,0 +1,8 @@
+[package]
+name = "calculator"
+version = "0.1.0"
+edition = "2021"
+description = "Простой калькулятор с CLI и REPL, написанный на Rust"
+license = "MIT"
+
+[dependencies]
