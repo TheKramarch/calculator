@@ -53,6 +53,14 @@ fn supports_abs() {
 }
 
 #[test]
+fn supports_rounding_functions() {
+    assert_close(evaluate("round(2.6)").unwrap(), 3.0);
+    assert_close(evaluate("round(-2.5)").unwrap(), -3.0);
+    assert_close(evaluate("floor(2.9)").unwrap(), 2.0);
+    assert_close(evaluate("ceil(2.1)").unwrap(), 3.0);
+}
+
+#[test]
 fn supports_nested_functions() {
     assert_close(evaluate("sqrt(abs(-16))").unwrap(), 4.0);
 }

@@ -45,7 +45,7 @@ impl std::error::Error for CalcError {}
 /// Вычисляет арифметическое выражение.
 ///
 /// Поддерживаются `+`, `-`, `*`, `/`, `%`, `^`, скобки, унарный минус,
-/// а также функции `sqrt` и `abs`.
+/// а также функции `sqrt`, `abs`, `round`, `floor` и `ceil`.
 pub fn evaluate(input: &str) -> Result<f64, CalcError> {
     let mut parser = Parser::new(input);
     parser.skip_whitespace();
@@ -223,6 +223,9 @@ impl Parser {
         match name.to_ascii_lowercase().as_str() {
             "sqrt" => ops::sqrt(argument),
             "abs" => Ok(ops::abs(argument)),
+            "round" => Ok(argument.round()),
+            "floor" => Ok(argument.floor()),
+            "ceil" => Ok(argument.ceil()),
             _ => Err(CalcError::UnknownFunction(name)),
         }
     }
