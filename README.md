@@ -1,5 +1,7 @@
 # calculator
 
+[![CI](https://github.com/TheKramarch/calculator/actions/workflows/ci.yml/badge.svg)](https://github.com/TheKramarch/calculator/actions/workflows/ci.yml)
+
 Простой калькулятор на Rust с двумя режимами работы: вычисление выражения из
 аргументов командной строки и интерактивный REPL.
 
