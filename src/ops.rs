@@ -38,3 +38,21 @@ pub fn sqrt(value: f64) -> Result<f64, CalcError> {
 pub fn abs(value: f64) -> f64 {
     value.abs()
 }
+
+/// Натуральный логарифм с проверкой области определения.
+pub fn ln(value: f64) -> Result<f64, CalcError> {
+    if value <= 0.0 {
+        Err(CalcError::NonPositiveLogarithm)
+    } else {
+        Ok(value.ln())
+    }
+}
+
+/// Десятичный логарифм с проверкой области определения.
+pub fn log10(value: f64) -> Result<f64, CalcError> {
+    if value <= 0.0 {
+        Err(CalcError::NonPositiveLogarithm)
+    } else {
+        Ok(value.log10())
+    }
+}
