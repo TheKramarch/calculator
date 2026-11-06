@@ -61,6 +61,24 @@ fn supports_rounding_functions() {
 }
 
 #[test]
+fn supports_logarithms() {
+    assert_close(evaluate("ln(1)").unwrap(), 0.0);
+    assert_close(evaluate("log10(1000)").unwrap(), 3.0);
+}
+
+#[test]
+fn rejects_logarithm_of_non_positive_number() {
+    assert_eq!(
+        evaluate("ln(0)").unwrap_err(),
+        CalcError::NonPositiveLogarithm
+    );
+    assert_eq!(
+        evaluate("log10(-5)").unwrap_err(),
+        CalcError::NonPositiveLogarithm
+    );
+}
+
+#[test]
 fn supports_nested_functions() {
     assert_close(evaluate("sqrt(abs(-16))").unwrap(), 4.0);
 }

@@ -17,6 +17,7 @@ pub enum CalcError {
     ExpectedParenthesis(String),
     UnknownFunction(String),
     NegativeSquareRoot,
+    NonPositiveLogarithm,
 }
 
 impl fmt::Display for CalcError {
@@ -36,6 +37,9 @@ impl fmt::Display for CalcError {
             CalcError::NegativeSquareRoot => {
                 write!(f, "квадратный корень из отрицательного числа")
             }
+            CalcError::NonPositiveLogarithm => {
+                write!(f, "логарифм неположительного числа")
+            }
         }
     }
 }
@@ -45,7 +49,7 @@ impl std::error::Error for CalcError {}
 /// Вычисляет арифметическое выражение.
 ///
 /// Поддерживаются `+`, `-`, `*`, `/`, `%`, `^`, скобки, унарный минус,
-/// а также функции `sqrt`, `abs`, `round`, `floor` и `ceil`.
+/// а также функции `sqrt`, `abs`, `round`, `floor`, `ceil`, `ln` и `log10`.
 pub fn evaluate(input: &str) -> Result<f64, CalcError> {
     let mut parser = Parser::new(input);
     parser.skip_whitespace();
@@ -204,7 +208,7 @@ impl Parser {
 
     fn parse_function(&mut self) -> Result<f64, CalcError> {
         let start = self.pos;
-        while matches!(self.peek(), Some(c) if c.is_alphabetic()) {
+        while matches!(self.peek(), Some(c) if c.is_alphanumeric() || c == '_') {
             self.advance();
         }
         let name: String = self.chars[start..self.pos].iter().collect();
@@ -226,6 +230,8 @@ impl Parser {
             "round" => Ok(argument.round()),
             "floor" => Ok(argument.floor()),
             "ceil" => Ok(argument.ceil()),
+            "ln" => ops::ln(argument),
+            "log10" => ops::log10(argument),
             _ => Err(CalcError::UnknownFunction(name)),
         }
     }
